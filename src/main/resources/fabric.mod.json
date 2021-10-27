@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "zombiemod",
+  "version": "${version}",
+
+  "name": "ZombieMod",
+  "authors": [
+    "gamma_02"
+  ],
+
+  "license": "CC0-1.0",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "gamma_02.zombiemobs.ZombieMod"
+    ],
+    "client": [
+      "gamma_02.zombiemobs.RenderInit"
+    ]
+  },
+  "mixins": [
+    "zombiemobs.mixins.json"
+  ],
+  "accessWidener": "zombiemod.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
