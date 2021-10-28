@@ -1,6 +1,8 @@
-package gamma_02.zombiemobs.entities;
+package gamma_02.zombiemobs.renderers;
 
 import gamma_02.zombiemobs.ZombieMod;
+import gamma_02.zombiemobs.entities.ZombieWitch;
+import gamma_02.zombiemobs.models.witchCovertedModel;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;

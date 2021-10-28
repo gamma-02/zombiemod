@@ -3,8 +3,9 @@
 // Made with Blockbench 4.0.3
 	// Exported for Minecraft version 1.15
 	// Paste this class into your mod and generate all required imports
-	package gamma_02.zombiemobs.entities;
+	package gamma_02.zombiemobs.models;
 
+import gamma_02.zombiemobs.entities.ZombieWitch;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
