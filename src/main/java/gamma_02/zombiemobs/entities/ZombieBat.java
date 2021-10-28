@@ -205,6 +205,10 @@ public class ZombieBat extends HostileEntity
 
 
     }
+    @Override
+    public boolean canBeControlledByRider() {
+        return true;
+    }
 
     public boolean damage(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {

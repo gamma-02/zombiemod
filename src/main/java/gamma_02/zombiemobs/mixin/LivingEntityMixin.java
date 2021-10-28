@@ -2,6 +2,7 @@ package gamma_02.zombiemobs.mixin;
 
 import gamma_02.zombiemobs.ZombieMod;
 import gamma_02.zombiemobs.entities.ZombieBat;
+import gamma_02.zombiemobs.entities.ZombieSkeleton;
 import gamma_02.zombiemobs.entities.ZombieWitch;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -30,8 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
-import static gamma_02.zombiemobs.ZombieMod.ZOMBIE_BAT;
-import static gamma_02.zombiemobs.ZombieMod.ZOMBIE_WITCH;
+import static gamma_02.zombiemobs.ZombieMod.*;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity
@@ -49,11 +49,21 @@ public abstract class LivingEntityMixin extends Entity
         System.out.println(this.getType());
         if(this.getType() == EntityType.WITCH){
             MobEntity mob = new ZombieWitch(ZOMBIE_WITCH, world);
+//            MobEntity mob1 = new ZombieBat(ZOMBIE_BAT, world);
             mob.setPos(this.getX(), this.getY()+1, this.getZ());
-            System.out.println(mob);
+//            mob1.setPos(this.getX(), this.getY()+1, this.getZ());
             world.spawnEntity(mob);
+//            world.spawnEntity(mob1);
+            System.out.println(mob);
+//            mob.startRiding(mob1, true);
+
         }else if(this.getType() == EntityType.BAT){
             MobEntity mob = new ZombieBat(ZOMBIE_BAT, world);
+            mob.setPos(this.getX(), this.getY(), this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.SKELETON){
+            MobEntity mob = new ZombieSkeleton(ZOMBIE_SKELETON, world);
             mob.setPos(this.getX(), this.getY(), this.getZ());
             System.out.println(mob);
             world.spawnEntity(mob);

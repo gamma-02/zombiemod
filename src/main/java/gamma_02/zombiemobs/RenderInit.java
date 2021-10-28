@@ -1,6 +1,9 @@
 package gamma_02.zombiemobs;
 
+import gamma_02.zombiemobs.entities.ZombieSkeleton;
 import gamma_02.zombiemobs.models.batCovertedModel;
+import gamma_02.zombiemobs.models.skeletonCovertedModel;
+import gamma_02.zombiemobs.renderers.SkeletonZombieRenderer;
 import gamma_02.zombiemobs.renderers.ZombieBatRenderer;
 import gamma_02.zombiemobs.renderers.ZombieWitchRendere;
 import net.fabricmc.api.ClientModInitializer;
@@ -14,12 +17,15 @@ public class RenderInit implements ClientModInitializer
 {
     public static final EntityModelLayer WITCH_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "witch_layer"), "main");
     public static final EntityModelLayer BAT_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "bat_layer"), "main");
+    public static final EntityModelLayer SKELETON_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "skeleton_layer"), "main");
     @Override public void onInitializeClient()
     {
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_WITCH, ZombieWitchRendere::new);
         EntityModelLayerRegistry.registerModelLayer(WITCH_LAYER, witchCovertedModel::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_BAT, ZombieBatRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(BAT_LAYER, batCovertedModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_SKELETON, SkeletonZombieRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(SKELETON_LAYER, skeletonCovertedModel::getTexturedModelData);
 
     }
 }
