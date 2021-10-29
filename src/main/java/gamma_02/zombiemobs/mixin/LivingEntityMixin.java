@@ -2,6 +2,7 @@ package gamma_02.zombiemobs.mixin;
 
 import gamma_02.zombiemobs.ZombieMod;
 import gamma_02.zombiemobs.entities.ZombieBat;
+import gamma_02.zombiemobs.entities.ZombiePig;
 import gamma_02.zombiemobs.entities.ZombieSkeleton;
 import gamma_02.zombiemobs.entities.ZombieWitch;
 import net.fabricmc.api.EnvType;
@@ -14,6 +15,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTracker;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.server.command.CommandOutput;
@@ -36,6 +38,8 @@ import static gamma_02.zombiemobs.ZombieMod.*;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity
 {
+
+    @Shadow public abstract DamageTracker getDamageTracker();
 
     public LivingEntityMixin(EntityType<?> entityType, World world)
     {
@@ -65,6 +69,11 @@ public abstract class LivingEntityMixin extends Entity
         }else if(this.getType() == EntityType.SKELETON){
             MobEntity mob = new ZombieSkeleton(ZOMBIE_SKELETON, world);
             mob.setPos(this.getX(), this.getY(), this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.PIG){
+            MobEntity mob = new ZombiePig(ZOMBIE_PIG, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
             System.out.println(mob);
             world.spawnEntity(mob);
         }

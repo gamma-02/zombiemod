@@ -1,6 +1,7 @@
 package gamma_02.zombiemobs.entities;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
@@ -17,6 +18,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 
 import static net.minecraft.item.Items.TIPPED_ARROW;
@@ -45,5 +48,9 @@ public class ZombieSkeleton extends SkeletonEntity
     @Override
     protected PersistentProjectileEntity createArrowProjectile(ItemStack arrow, float damageModifier) {
         return ProjectileUtil.createArrowProjectile(this, PotionUtil.setPotion(TIPPED_ARROW.getDefaultStack(), Potions.HARMING), damageModifier);
+    }
+    protected void initEquipment(LocalDifficulty difficulty) {
+        super.initEquipment(difficulty);
+        this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
     }
 }
