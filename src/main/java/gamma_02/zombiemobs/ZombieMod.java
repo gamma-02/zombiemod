@@ -1,9 +1,6 @@
 package gamma_02.zombiemobs;
 
-import gamma_02.zombiemobs.entities.ZombieBat;
-import gamma_02.zombiemobs.entities.ZombiePig;
-import gamma_02.zombiemobs.entities.ZombieSkeleton;
-import gamma_02.zombiemobs.entities.ZombieWitch;
+import gamma_02.zombiemobs.entities.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -28,6 +25,8 @@ public class ZombieMod implements ModInitializer
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieSkeleton::new).dimensions(EntityDimensions.fixed(1.5f, 1f)).build());
     public static final EntityType<ZombiePig> ZOMBIE_PIG = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_pig"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombiePig::new).dimensions(EntityDimensions.fixed(0.9f, 0.9f)).build());
+    public static final EntityType<ZombieSheep> ZOMBIE_SHEEP = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_sheep"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieSheep::new).dimensions(EntityDimensions.fixed(EntityType.SHEEP.getWidth(), EntityType.SHEEP.getHeight())).build());
     public static void setServer(MinecraftServer server){
         ZombieMod.server = server;
     }
@@ -42,6 +41,7 @@ public class ZombieMod implements ModInitializer
         FabricDefaultAttributeRegistry.register(ZOMBIE_BAT, ZombieBat.createBatAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_SKELETON, ZombieSkeleton.createAbstractSkeletonAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_PIG, ZombiePig.createPigAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_SHEEP, ZombieSheep.createPigAttributes());
 
 
     }
