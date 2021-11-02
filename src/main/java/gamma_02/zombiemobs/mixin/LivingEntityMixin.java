@@ -1,10 +1,7 @@
 package gamma_02.zombiemobs.mixin;
 
 import gamma_02.zombiemobs.ZombieMod;
-import gamma_02.zombiemobs.entities.ZombieBat;
-import gamma_02.zombiemobs.entities.ZombiePig;
-import gamma_02.zombiemobs.entities.ZombieSkeleton;
-import gamma_02.zombiemobs.entities.ZombieWitch;
+import gamma_02.zombiemobs.entities.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.command.CommandSource;
@@ -16,6 +13,8 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTracker;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.server.command.CommandOutput;
@@ -31,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Map;
 import java.util.Objects;
 
 import static gamma_02.zombiemobs.ZombieMod.*;
@@ -40,6 +40,8 @@ public abstract class LivingEntityMixin extends Entity
 {
 
     @Shadow public abstract DamageTracker getDamageTracker();
+
+    @Shadow public abstract Map<StatusEffect, StatusEffectInstance> getActiveStatusEffects();
 
     public LivingEntityMixin(EntityType<?> entityType, World world)
     {
@@ -76,6 +78,21 @@ public abstract class LivingEntityMixin extends Entity
             mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
             System.out.println(mob);
             world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.SHEEP){
+            MobEntity mob = new ZombieSheep(ZOMBIE_SHEEP, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.SILVERFISH){
+            MobEntity mob = new ZombieSilverfish(ZOMBIE_SILVERFISH, world);
+            MobEntity mob2 = new ZombieSilverfish(ZOMBIE_SILVERFISH, world);
+
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            mob2.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            System.out.println(mob2);
+            world.spawnEntity(mob);
+            world.spawnEntity(mob2);
         }
     }
 }

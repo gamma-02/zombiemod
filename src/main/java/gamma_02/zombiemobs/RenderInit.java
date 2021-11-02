@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
+import org.lwjgl.system.CallbackI;
 
 import javax.swing.text.html.parser.Entity;
 
@@ -19,6 +20,7 @@ public class RenderInit implements ClientModInitializer
     public static final EntityModelLayer SKELETON_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "skeleton_layer"), "main");
     public static final EntityModelLayer PIG_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "pig_layer"), "main");
     public static final EntityModelLayer SHEEP_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "sheep_layer"), "main");
+    public static final EntityModelLayer SILVERFISH_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "silverfish_layer"), "main");
     @Override public void onInitializeClient()
     {
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_WITCH, ZombieWitchRendere::new);
@@ -31,6 +33,8 @@ public class RenderInit implements ClientModInitializer
         EntityModelLayerRegistry.registerModelLayer(PIG_LAYER, pigCovertedModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SHEEP_LAYER, sheepCovertedModel::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_SHEEP, ZombieSheepRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(SILVERFISH_LAYER, silverfishCovertedModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_SILVERFISH, SilverfishRenderer::new);
 
     }
 }
