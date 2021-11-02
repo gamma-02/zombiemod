@@ -30,6 +30,8 @@ public class ZombieMod implements ModInitializer
     public static final EntityType<ZombieSilverfish> ZOMBIE_SILVERFISH = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_silverfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieSilverfish::new).dimensions(
                     EntityDimensions.fixed(EntityType.SILVERFISH.getWidth(), EntityType.SILVERFISH.getHeight())).build());
+    public static final EntityType<ZombieMagmaCube> ZOMBIE_MAGMA_CUBE = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_magmacube"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieMagmaCube::new).dimensions(EntityDimensions.changing(EntityType.MAGMA_CUBE.getWidth(), EntityType.MAGMA_CUBE.getHeight())).build());
 
     public static void setServer(MinecraftServer server){
         ZombieMod.server = server;
@@ -47,6 +49,7 @@ public class ZombieMod implements ModInitializer
         FabricDefaultAttributeRegistry.register(ZOMBIE_PIG, ZombiePig.createPigAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_SHEEP, ZombieSheep.createPigAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_SILVERFISH, ZombieSilverfish.createSilverfishAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_MAGMA_CUBE, ZombieMagmaCube.createMagmaCubeAttributes());
 
 
     }

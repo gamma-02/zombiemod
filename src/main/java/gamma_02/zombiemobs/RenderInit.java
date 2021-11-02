@@ -1,6 +1,7 @@
 package gamma_02.zombiemobs;
 
 import com.sun.jna.platform.win32.WinBase;
+import gamma_02.zombiemobs.entities.ZombieMagmaCube;
 import gamma_02.zombiemobs.entities.ZombieSkeleton;
 import gamma_02.zombiemobs.models.*;
 import gamma_02.zombiemobs.renderers.*;
@@ -21,6 +22,7 @@ public class RenderInit implements ClientModInitializer
     public static final EntityModelLayer PIG_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "pig_layer"), "main");
     public static final EntityModelLayer SHEEP_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "sheep_layer"), "main");
     public static final EntityModelLayer SILVERFISH_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "silverfish_layer"), "main");
+    public static final EntityModelLayer MAGMACUBE_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "magma_layer"), "main");
     @Override public void onInitializeClient()
     {
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_WITCH, ZombieWitchRendere::new);
@@ -35,6 +37,8 @@ public class RenderInit implements ClientModInitializer
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_SHEEP, ZombieSheepRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(SILVERFISH_LAYER, silverfishCovertedModel::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_SILVERFISH, SilverfishRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(MAGMACUBE_LAYER, ZombieMagmacubeModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_MAGMA_CUBE, ZombieMagmaCubeRenderer::new);
 
     }
 }

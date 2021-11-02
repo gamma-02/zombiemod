@@ -95,4 +95,5 @@ public abstract class LivingEntityMixin extends Entity
             world.spawnEntity(mob2);
         }
     }
+
 }
