@@ -32,6 +32,12 @@ public class ZombieMod implements ModInitializer
                     EntityDimensions.fixed(EntityType.SILVERFISH.getWidth(), EntityType.SILVERFISH.getHeight())).build());
     public static final EntityType<ZombieMagmaCube> ZOMBIE_MAGMA_CUBE = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_magmacube"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieMagmaCube::new).dimensions(EntityDimensions.changing(EntityType.MAGMA_CUBE.getWidth(), EntityType.MAGMA_CUBE.getHeight())).build());
+    public static final EntityType<ZombieGolem> ZOMBIE_GOLEM = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_golem"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieGolem::new).dimensions(EntityType.IRON_GOLEM.getDimensions()).build());
+    public static final EntityType<ZombieCreeper> ZOMBIE_CREEPER = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_creeper"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieCreeper::new).dimensions(EntityType.CREEPER.getDimensions()).build());
+    public static final EntityType<ZombieCreeperLeg> ZOMBIE_CREEPER_LEG = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "creeper_leg"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieCreeperLeg::new).dimensions(EntityDimensions.fixed(0.35f, 0.35f)).build());
 
     public static void setServer(MinecraftServer server){
         ZombieMod.server = server;
@@ -50,7 +56,9 @@ public class ZombieMod implements ModInitializer
         FabricDefaultAttributeRegistry.register(ZOMBIE_SHEEP, ZombieSheep.createPigAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_SILVERFISH, ZombieSilverfish.createSilverfishAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_MAGMA_CUBE, ZombieMagmaCube.createMagmaCubeAttributes());
-
+        FabricDefaultAttributeRegistry.register(ZOMBIE_GOLEM, ZombieGolem.createZombieGolemAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_CREEPER, ZombieCreeper.createCreeperAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_CREEPER_LEG, ZombieCreeperLeg.createCreeperLegAttributes());
 
     }
 }

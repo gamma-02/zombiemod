@@ -1,6 +1,7 @@
 package gamma_02.zombiemobs;
 
 import com.sun.jna.platform.win32.WinBase;
+import gamma_02.zombiemobs.entities.ZombieCreeperLeg;
 import gamma_02.zombiemobs.entities.ZombieMagmaCube;
 import gamma_02.zombiemobs.entities.ZombieSkeleton;
 import gamma_02.zombiemobs.models.*;
@@ -8,6 +9,7 @@ import gamma_02.zombiemobs.renderers.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
 import org.lwjgl.system.CallbackI;
@@ -23,6 +25,9 @@ public class RenderInit implements ClientModInitializer
     public static final EntityModelLayer SHEEP_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "sheep_layer"), "main");
     public static final EntityModelLayer SILVERFISH_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "silverfish_layer"), "main");
     public static final EntityModelLayer MAGMACUBE_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "magma_layer"), "main");
+    public static final EntityModelLayer GOLEM_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "golem_layer"), "main");
+    public static final EntityModelLayer CREEPER_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_creeper_layer"), "main");
+    public static final EntityModelLayer CREEPER_LEG_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_creeper_leg_layer"), "main");
     @Override public void onInitializeClient()
     {
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_WITCH, ZombieWitchRendere::new);
@@ -39,6 +44,13 @@ public class RenderInit implements ClientModInitializer
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_SILVERFISH, SilverfishRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(MAGMACUBE_LAYER, ZombieMagmacubeModel::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_MAGMA_CUBE, ZombieMagmaCubeRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(GOLEM_LAYER, irongolemCovertedModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_GOLEM, ZombieGolemRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(CREEPER_LAYER, creeperCovertedModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_CREEPER, ZombieCreeperRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(CREEPER_LEG_LAYER, creeperLegCovertedModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_CREEPER_LEG, ZombieCreeperLegRenderer::new);
+
 
     }
 }

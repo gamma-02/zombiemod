@@ -93,6 +93,21 @@ public abstract class LivingEntityMixin extends Entity
             System.out.println(mob2);
             world.spawnEntity(mob);
             world.spawnEntity(mob2);
+        }else if(this.getType() == EntityType.MAGMA_CUBE){
+            MobEntity mob = new ZombieMagmaCube(ZOMBIE_MAGMA_CUBE, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.IRON_GOLEM){
+            MobEntity mob = new ZombieGolem(ZOMBIE_GOLEM, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.CREEPER){
+            MobEntity mob = new ZombieCreeper(ZOMBIE_CREEPER, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
         }
     }
 
