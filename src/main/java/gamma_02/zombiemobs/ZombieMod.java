@@ -1,5 +1,6 @@
 package gamma_02.zombiemobs;
 
+import com.mojang.serialization.Decoder;
 import gamma_02.zombiemobs.entities.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -38,6 +39,12 @@ public class ZombieMod implements ModInitializer
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieCreeper::new).dimensions(EntityType.CREEPER.getDimensions()).build());
     public static final EntityType<ZombieCreeperLeg> ZOMBIE_CREEPER_LEG = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "creeper_leg"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieCreeperLeg::new).dimensions(EntityDimensions.fixed(0.35f, 0.35f)).build());
+    public static final EntityType<ZombieSpider> ZOMBIE_SPIDER = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_spider"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieSpider::new).dimensions(EntityType.SPIDER.getDimensions()).build());
+    public static final EntityType<ZombieBlaze> ZOMBIE_BLAZE = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_blaze"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieBlaze::new).dimensions(EntityType.BLAZE.getDimensions()).build());
+    public static final EntityType<ZombieEnderman> ZOMBIE_ENDERMAN = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_enderman"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieEnderman::new).dimensions(EntityType.ENDERMAN.getDimensions()).build());
 
     public static void setServer(MinecraftServer server){
         ZombieMod.server = server;
@@ -59,6 +66,8 @@ public class ZombieMod implements ModInitializer
         FabricDefaultAttributeRegistry.register(ZOMBIE_GOLEM, ZombieGolem.createZombieGolemAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_CREEPER, ZombieCreeper.createCreeperAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_CREEPER_LEG, ZombieCreeperLeg.createCreeperLegAttributes());
-
+        FabricDefaultAttributeRegistry.register(ZOMBIE_SPIDER, ZombieSpider.createSpiderAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_BLAZE, ZombieBlaze.createZombieBlazeAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_ENDERMAN, ZombieEnderman.createEndermanAttributes());
     }
 }

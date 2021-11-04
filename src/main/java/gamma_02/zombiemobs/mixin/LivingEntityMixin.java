@@ -11,14 +11,18 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTracker;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WitchEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandOutput;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
@@ -42,6 +46,18 @@ public abstract class LivingEntityMixin extends Entity
     @Shadow public abstract DamageTracker getDamageTracker();
 
     @Shadow public abstract Map<StatusEffect, StatusEffectInstance> getActiveStatusEffects();
+
+    @Shadow public abstract boolean isPartOfGame();
+
+    @Shadow public abstract ItemStack getArrowType(ItemStack stack);
+
+    @Shadow public @Nullable abstract EntityAttributeInstance getAttributeInstance(EntityAttribute attribute);
+
+    @Shadow public abstract boolean canMoveVoluntarily();
+
+    @Shadow public abstract void setCurrentHand(Hand hand);
+
+    public int playerNoMovementTicks = 0;
 
     public LivingEntityMixin(EntityType<?> entityType, World world)
     {
@@ -108,6 +124,50 @@ public abstract class LivingEntityMixin extends Entity
             mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
             System.out.println(mob);
             world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.SPIDER){
+            MobEntity mob = new ZombieSpider(ZOMBIE_SPIDER, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+
+        }else if(this.getType() == EntityType.BLAZE){
+            MobEntity mob = new ZombieBlaze(ZOMBIE_BLAZE, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.ENDERMAN){
+            MobEntity mob = new ZombieEnderman(ZOMBIE_ENDERMAN, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+        }
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    public void tickMixin(CallbackInfo ci){
+        if(this.getType() == ZombieMod.ZOMBIE_ENDERMAN){
+
+            ZombieEnderman current = (ZombieEnderman)this.world.getEntityById(this.getId());
+            if( current != null && !current.isPlayerNull())
+            {
+                if(current.playerIsStaring){
+                    playerNoMovementTicks = 20;
+                }
+                if ( playerNoMovementTicks > 0)
+                {
+                    current.playerStaring.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+                    System.out.println(playerNoMovementTicks);
+                    if(!current.playerIsStaring)
+                    {
+                        playerNoMovementTicks--;
+                    }
+                } else
+                {
+                    current.playerStaring.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+                }
+
+            }
+
         }
     }
 

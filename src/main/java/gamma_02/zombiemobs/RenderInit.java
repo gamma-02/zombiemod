@@ -10,7 +10,11 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.client.render.entity.PufferfishEntityRenderer;
+import net.minecraft.client.render.entity.model.BlazeEntityModel;
+import net.minecraft.client.render.entity.model.EndermanEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.entity.model.SpiderEntityModel;
 import net.minecraft.util.Identifier;
 import org.lwjgl.system.CallbackI;
 
@@ -28,6 +32,9 @@ public class RenderInit implements ClientModInitializer
     public static final EntityModelLayer GOLEM_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "golem_layer"), "main");
     public static final EntityModelLayer CREEPER_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_creeper_layer"), "main");
     public static final EntityModelLayer CREEPER_LEG_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_creeper_leg_layer"), "main");
+    public static final EntityModelLayer BLAZE_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_blaze_layer"), "main");
+    public static final EntityModelLayer SPIDER_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_spider_layer"), "main");
+    public static final EntityModelLayer ENDERMAN_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_enderman_layer"),"main");
     @Override public void onInitializeClient()
     {
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_WITCH, ZombieWitchRendere::new);
@@ -50,6 +57,12 @@ public class RenderInit implements ClientModInitializer
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_CREEPER, ZombieCreeperRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(CREEPER_LEG_LAYER, creeperLegCovertedModel::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_CREEPER_LEG, ZombieCreeperLegRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(BLAZE_LAYER, BlazeEntityModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_BLAZE, ZombieBlazeEntityRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(SPIDER_LAYER, SpiderEntityModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_SPIDER, ZombieSpiderRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(ENDERMAN_LAYER, EndermanEntityModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_ENDERMAN, ZombieEndermanRenderer::new);
 
 
     }
