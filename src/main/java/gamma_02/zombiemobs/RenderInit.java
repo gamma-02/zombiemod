@@ -15,6 +15,7 @@ import net.minecraft.client.render.entity.model.BlazeEntityModel;
 import net.minecraft.client.render.entity.model.EndermanEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.SpiderEntityModel;
+import net.minecraft.entity.ai.brain.task.CelebrateRaidWinTask;
 import net.minecraft.util.Identifier;
 import org.lwjgl.system.CallbackI;
 
@@ -35,6 +36,7 @@ public class RenderInit implements ClientModInitializer
     public static final EntityModelLayer BLAZE_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_blaze_layer"), "main");
     public static final EntityModelLayer SPIDER_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_spider_layer"), "main");
     public static final EntityModelLayer ENDERMAN_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_enderman_layer"),"main");
+    public static final EntityModelLayer DRAGON_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_dragon_layer"), "main");
     @Override public void onInitializeClient()
     {
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_WITCH, ZombieWitchRendere::new);
@@ -63,6 +65,8 @@ public class RenderInit implements ClientModInitializer
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_SPIDER, ZombieSpiderRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(ENDERMAN_LAYER, EndermanEntityModel::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_ENDERMAN, ZombieEndermanRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(DRAGON_LAYER, ZombieEnderdragonRenderer::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_ENDER_DRAGON, ZombieEnderdragonRenderer::new);
 
 
     }

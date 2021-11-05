@@ -1,6 +1,7 @@
 package gamma_02.zombiemobs;
 
 import com.mojang.serialization.Decoder;
+import gamma_02.zombiemobs.dragon.ZombieDragonFight;
 import gamma_02.zombiemobs.entities.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -18,6 +19,13 @@ public class ZombieMod implements ModInitializer
 {
     public static String ModID = "zombiemod";
     public static MinecraftServer server;
+    public static ZombieDragonFight zombieDragonFight;
+    public static void setZombieDragonFight(ZombieDragonFight fight){
+        zombieDragonFight = fight;
+    }
+    public static ZombieDragonFight getZombieDragonFight(){
+        return zombieDragonFight;
+    }
     public static final EntityType<ZombieWitch> ZOMBIE_WITCH = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_witch"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieWitch::new).dimensions(EntityDimensions.fixed(0.6F, 1.95F)).build());
     public static final EntityType<ZombieBat> ZOMBIE_BAT = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_bat"),
@@ -45,6 +53,8 @@ public class ZombieMod implements ModInitializer
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieBlaze::new).dimensions(EntityType.BLAZE.getDimensions()).build());
     public static final EntityType<ZombieEnderman> ZOMBIE_ENDERMAN = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_enderman"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieEnderman::new).dimensions(EntityType.ENDERMAN.getDimensions()).build());
+    public static final EntityType<ZombieEnderDragon> ZOMBIE_ENDER_DRAGON = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_dragon"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieEnderDragon::new).dimensions(EntityType.ENDER_DRAGON.getDimensions()).build());
 
     public static void setServer(MinecraftServer server){
         ZombieMod.server = server;
@@ -69,5 +79,6 @@ public class ZombieMod implements ModInitializer
         FabricDefaultAttributeRegistry.register(ZOMBIE_SPIDER, ZombieSpider.createSpiderAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_BLAZE, ZombieBlaze.createZombieBlazeAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_ENDERMAN, ZombieEnderman.createEndermanAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_ENDER_DRAGON, ZombieEnderDragon.createEnderDragonAttributes());
     }
 }

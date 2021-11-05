@@ -4,7 +4,9 @@
   "package": "gamma_02.zombiemobs.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "LivingEntityMixin"
+    "EntityMixin",
+    "LivingEntityMixin",
+    "ServerWorldMixin"
   ],
   "client": [
   ],

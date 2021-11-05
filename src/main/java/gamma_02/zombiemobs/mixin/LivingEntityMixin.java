@@ -1,9 +1,12 @@
 package gamma_02.zombiemobs.mixin;
 
 import gamma_02.zombiemobs.ZombieMod;
+import gamma_02.zombiemobs.dragon.ZombieDragonFight;
 import gamma_02.zombiemobs.entities.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.render.entity.model.EndermanEntityModel;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -12,6 +15,8 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonFight;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTracker;
 import net.minecraft.entity.effect.StatusEffect;
@@ -20,12 +25,14 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.command.CommandOutput;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import org.apache.logging.log4j.core.jmx.Server;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,12 +43,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 import static gamma_02.zombiemobs.ZombieMod.*;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity
 {
+
 
     @Shadow public abstract DamageTracker getDamageTracker();
 
@@ -57,7 +66,14 @@ public abstract class LivingEntityMixin extends Entity
 
     @Shadow public abstract void setCurrentHand(Hand hand);
 
+    @Shadow protected abstract int computeFallDamage(float fallDistance, float damageMultiplier);
+
+    @Shadow protected abstract void fall(double heightDifference, boolean onGround, BlockState landedState,
+            BlockPos landedPosition);
+
     public int playerNoMovementTicks = 0;
+
+    public ZombieDragonFight zombieDragonFight = null;
 
     public LivingEntityMixin(EntityType<?> entityType, World world)
     {
@@ -140,6 +156,25 @@ public abstract class LivingEntityMixin extends Entity
             mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
             System.out.println(mob);
             world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.ENDER_DRAGON){
+            EnderDragonEntity dragon = this.getDragonEntity();
+            dragon.deathTime = 0;
+
+
+
+            NbtCompound compound = dragon.getFight().toNbt();
+            dragon.kill();
+            dragon.getFight().updateFight(dragon);
+            dragon.discard();
+            compound.putBoolean("DragonKilled", false);
+            compound.putBoolean("PreviouslyKilled", false);
+            zombieDragonFight = new ZombieDragonFight(ZombieMod.getServer().getWorld(World.END), (long)1, compound);
+            ZombieMod.setZombieDragonFight(zombieDragonFight);
+            ZombieEnderDragon zombieDragon = zombieDragonFight.createDragon();
+            zombieDragon.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            world.spawnEntity(zombieDragon);
+
+
         }
     }
 
@@ -169,6 +204,15 @@ public abstract class LivingEntityMixin extends Entity
             }
 
         }
+    }
+
+    public EnderDragonEntity getDragonEntity(){
+        UUID id = ZombieMod.getServer().getWorld(World.END).getEnderDragonFight().toNbt().getUuid("Dragon");
+        return (EnderDragonEntity)ZombieMod.getServer().getWorld(World.END).getEntity(id);
+    }
+
+    public ZombieDragonFight getZombieDragonFight(){
+        return this.zombieDragonFight;
     }
 
 }
