@@ -23,7 +23,6 @@
   "mixins": [
     "zombiemobs.mixins.json"
   ],
-  "accessWidener": "zombiemod.accesswidener",
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",

@@ -1,5 +1,6 @@
 package gamma_02.zombiemobs.entities;
 
+import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -231,6 +232,11 @@ public class ZombieBlaze extends HostileEntity
         private double getFollowRange() {
             return this.blaze.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE);
         }
+    }
+    public void onDeath(DamageSource source){
+
+        ZombieMod.getTimeout.add(this);
+
     }
 
 

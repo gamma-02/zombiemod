@@ -1,6 +1,0 @@
-accessWidener v1 named
-
-accessible field net/minecraft/entity/mob/WitchEntity raidGoal Lnet/minecraft/entity/ai/goal/RaidGoal;
-accessible field net/minecraft/entity/mob/WitchEntity attackPlayerGoal Lnet/minecraft/entity/ai/goal/ToggleableActiveTargetGoal;
-accessible field net/minecraft/entity/mob/WitchEntity drinkTimeLeft I
-accessible field net/minecraft/entity/mob/WitchEntity DRINKING_SPEED_PENALTY_MODIFIER Lnet/minecraft/entity/attribute/EntityAttributeModifier;

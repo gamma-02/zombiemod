@@ -1,9 +1,11 @@
 package gamma_02.zombiemobs.entities;
 
+import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -37,6 +39,11 @@ public class ZombieGolem extends IronGolemEntity
 
     public IronGolemEntity.Crack getCrack() {
         return IronGolemEntity.Crack.from(this.getHealth() / this.getMaxHealth());
+    }
+    public void onDeath(DamageSource source){
+
+        ZombieMod.getTimeout.add(this);
+
     }
 
 

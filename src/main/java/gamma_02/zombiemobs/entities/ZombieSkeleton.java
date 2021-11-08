@@ -1,8 +1,10 @@
 package gamma_02.zombiemobs.entities;
 
+import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.HostileEntity;
@@ -52,5 +54,10 @@ public class ZombieSkeleton extends SkeletonEntity
     protected void initEquipment(LocalDifficulty difficulty) {
         super.initEquipment(difficulty);
         this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+    }
+    public void onDeath(DamageSource source){
+
+        ZombieMod.getTimeout.add(this);
+
     }
 }

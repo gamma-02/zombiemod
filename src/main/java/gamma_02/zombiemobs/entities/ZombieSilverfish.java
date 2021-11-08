@@ -1,5 +1,6 @@
 package gamma_02.zombiemobs.entities;
 
+import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.InfestedBlock;
@@ -98,6 +99,11 @@ public class ZombieSilverfish extends HostileEntity
 
     public EntityGroup getGroup() {
         return EntityGroup.ARTHROPOD;
+    }
+    public void onDeath(DamageSource source){
+
+        ZombieMod.getTimeout.add(this);
+
     }
 
 

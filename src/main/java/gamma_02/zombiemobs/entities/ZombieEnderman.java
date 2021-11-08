@@ -1,5 +1,6 @@
 package gamma_02.zombiemobs.entities;
 
+import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -542,5 +543,10 @@ public class ZombieEnderman extends HostileEntity implements Angerable
             }
 
         }
+    }
+    public void onDeath(DamageSource source){
+
+        ZombieMod.getTimeout.add(this);
+
     }
 }

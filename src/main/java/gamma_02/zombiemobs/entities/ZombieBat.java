@@ -1,5 +1,7 @@
 package gamma_02.zombiemobs.entities;
 
+import gamma_02.zombiemobs.ZombieMod;
+import gamma_02.zombiemobs.mixin.EntityMixin;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -246,6 +248,12 @@ public class ZombieBat extends HostileEntity
     static {
         BAT_FLAGS = DataTracker.registerData(BatEntity.class, TrackedDataHandlerRegistry.BYTE);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createAttackable().setBaseMaxDistance(16.0D);
+    }
+
+    public void onDeath(DamageSource source){
+
+        ZombieMod.getTimeout.add(this);
+
     }
 
 }

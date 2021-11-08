@@ -1,5 +1,6 @@
 package gamma_02.zombiemobs.entities;
 
+import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.*;
@@ -213,5 +214,10 @@ public class ZombieWitch extends HostileEntity implements RangedAttackMob
     @Override public boolean cannotBeSilenced()
     {
         return false;
+    }
+    public void onDeath(DamageSource source){
+
+        ZombieMod.getTimeout.add(this);
+
     }
 }

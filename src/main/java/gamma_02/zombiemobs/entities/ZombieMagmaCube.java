@@ -1,5 +1,6 @@
 package gamma_02.zombiemobs.entities;
 
+import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -117,5 +118,10 @@ public class ZombieMagmaCube extends SlimeEntity
     public void onPlayerCollision(PlayerEntity player){
         super.onPlayerCollision(player);
         player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 1, false, false, false));
+    }
+    public void onDeath(DamageSource source){
+
+        ZombieMod.getTimeout.add(this);
+
     }
 }

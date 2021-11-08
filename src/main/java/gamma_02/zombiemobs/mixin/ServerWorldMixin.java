@@ -1,5 +1,6 @@
 package gamma_02.zombiemobs.mixin;
 
+import gamma_02.zombiemobs.TimeOut;
 import gamma_02.zombiemobs.ZombieMod;
 import gamma_02.zombiemobs.dragon.ZombieDragonFight;
 import net.minecraft.server.MinecraftServer;
@@ -26,15 +27,18 @@ public abstract class ServerWorldMixin extends World
     @Shadow private boolean inBlockTick;
     @Shadow @Final private MinecraftServer server;
     private ZombieDragonFight zombieDragonFight;
+    private TimeOut timeOut = ZombieMod.getTimeout;
 
     protected ServerWorldMixin(MutableWorldProperties mutableWorldProperties, RegistryKey<World> registryKey,
             DimensionType dimensionType, Supplier<Profiler> supplier, boolean bl, boolean bl2, long l)
     {
         super(mutableWorldProperties, registryKey, dimensionType, supplier, bl, bl2, l);
+
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void tickMixin(BooleanSupplier shouldKeepTicking, CallbackInfo ci){
+
         Profiler profiler = this.getProfiler();
         this.inBlockTick = true;
         this.zombieDragonFight = ZombieMod.getZombieDragonFight();
@@ -43,6 +47,11 @@ public abstract class ServerWorldMixin extends World
             this.zombieDragonFight.tick();
         }
 
+        if(ZombieMod.started && this.timeOut!=null){
+            timeOut.setWorld(this.server.getWorld(this.getRegistryKey()));
+            timeOut.tick();
+        }
+        this.timeOut = ZombieMod.getTimeout;
 
 
 

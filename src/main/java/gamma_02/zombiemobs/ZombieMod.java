@@ -1,6 +1,5 @@
 package gamma_02.zombiemobs;
 
-import com.mojang.serialization.Decoder;
 import gamma_02.zombiemobs.dragon.ZombieDragonFight;
 import gamma_02.zombiemobs.entities.*;
 import net.fabricmc.api.ModInitializer;
@@ -20,6 +19,8 @@ public class ZombieMod implements ModInitializer
     public static String ModID = "zombiemod";
     public static MinecraftServer server;
     public static ZombieDragonFight zombieDragonFight;
+    public static TimeOut getTimeout = null;
+    public static boolean started = false;
     public static void setZombieDragonFight(ZombieDragonFight fight){
         zombieDragonFight = fight;
     }
@@ -67,6 +68,7 @@ public class ZombieMod implements ModInitializer
     {
         FabricDefaultAttributeRegistry.register(ZOMBIE_WITCH, ZombieWitch.createWitchAttributes());
         ServerLifecycleEvents.SERVER_STARTED.register(ZombieMod::setServer);
+        ServerLifecycleEvents.SERVER_STARTED.register(ZombieMod::setTimeout);
         FabricDefaultAttributeRegistry.register(ZOMBIE_BAT, ZombieBat.createBatAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_SKELETON, ZombieSkeleton.createAbstractSkeletonAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_PIG, ZombiePig.createPigAttributes());
@@ -80,5 +82,12 @@ public class ZombieMod implements ModInitializer
         FabricDefaultAttributeRegistry.register(ZOMBIE_BLAZE, ZombieBlaze.createZombieBlazeAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_ENDERMAN, ZombieEnderman.createEndermanAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_ENDER_DRAGON, ZombieEnderDragon.createEnderDragonAttributes());
+    }
+    public static void setTimeout(TimeOut time){
+        getTimeout = time;
+    }
+    public static void setTimeout(MinecraftServer server){
+        getTimeout = new TimeOut(server.getOverworld());
+        started = true;
     }
 }
