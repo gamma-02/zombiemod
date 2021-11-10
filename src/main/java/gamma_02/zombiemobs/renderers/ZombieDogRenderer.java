@@ -21,7 +21,7 @@ public class ZombieDogRenderer extends MobEntityRenderer<ZombieDog, ZombieDogMod
         super(context, new ZombieDogModel(context.getPart(RenderInit.DOG_LAYER)), 0.5f);
     }
 
-    protected float getAnimationProgress(WolfEntity wolfEntity, float f) {
+    protected float getAnimationProgress(ZombieDog wolfEntity, float f) {
         return wolfEntity.getTailAngle();
     }
 
