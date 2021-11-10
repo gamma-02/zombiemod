@@ -16,7 +16,6 @@ import org.lwjgl.system.CallbackI;
 
 public class ZombieDogRenderer extends MobEntityRenderer<ZombieDog, ZombieDogModel>
 {
-    //TODO:layer
     public ZombieDogRenderer(EntityRendererFactory.Context context)
     {
         super(context, new ZombieDogModel(context.getPart(RenderInit.DOG_LAYER)), 0.5f);
