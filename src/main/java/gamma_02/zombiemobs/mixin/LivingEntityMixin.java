@@ -21,8 +21,11 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTracker;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.mob.MagmaCubeEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WitchEntity;
+import net.minecraft.entity.mob.ZombieVillagerEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -126,10 +129,15 @@ public abstract class LivingEntityMixin extends Entity
             world.spawnEntity(mob);
             world.spawnEntity(mob2);
         }else if(this.getType() == EntityType.MAGMA_CUBE){
-            MobEntity mob = new ZombieMagmaCube(ZOMBIE_MAGMA_CUBE, world);
-            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
-            System.out.println(mob);
-            world.spawnEntity(mob);
+            MagmaCubeEntity entity = (MagmaCubeEntity)world.getEntityById(this.getId());
+            if(entity.getSize() == 1)
+            {
+                ZombieMagmaCube mob = new ZombieMagmaCube(ZOMBIE_MAGMA_CUBE, world);
+                mob.setSize(1, true);
+                mob.setPos(this.getX(), this.getY() + 0.3, this.getZ());
+                System.out.println(mob);
+                world.spawnEntity(mob);
+            }
         }else if(this.getType() == EntityType.IRON_GOLEM){
             MobEntity mob = new ZombieGolem(ZOMBIE_GOLEM, world);
             mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
@@ -168,13 +176,28 @@ public abstract class LivingEntityMixin extends Entity
             dragon.discard();
             compound.putBoolean("DragonKilled", false);
             compound.putBoolean("PreviouslyKilled", false);
-            zombieDragonFight = new ZombieDragonFight(ZombieMod.getServer().getWorld(World.END), (long)1, compound);
+            zombieDragonFight = new ZombieDragonFight(ZombieMod.getServer().getWorld(World.END), 1, compound);
             ZombieMod.setZombieDragonFight(zombieDragonFight);
             ZombieEnderDragon zombieDragon = zombieDragonFight.createDragon();
             zombieDragon.setPos(this.getX(), this.getY()+0.3, this.getZ());
             world.spawnEntity(zombieDragon);
 
 
+        }else if(this.getType() == EntityType.WOLF){
+            WolfEntity wolf = (WolfEntity)world.getEntityById(this.getId());
+            if(wolf.isTamed()){
+                ZombieDog mob = new ZombieDog(ZOMBIE_DOG, world);
+                mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+                System.out.println(mob);
+                world.spawnEntity(mob);
+            }
+        }else if(this.getType() == EntityType.VILLAGER){
+            MobEntity mob = new ZombieVillagerEntity(EntityType.ZOMBIE_VILLAGER, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+        }else if(this.getType() == EntityType.ZOMBIE_VILLAGER){
+            getTimeout.add(world.getEntityById(this.getId()));
         }
     }
 

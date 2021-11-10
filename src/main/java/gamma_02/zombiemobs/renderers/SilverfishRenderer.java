@@ -12,6 +12,7 @@ import java.awt.image.renderable.RenderableImage;
 
 public class SilverfishRenderer extends MobEntityRenderer<ZombieSilverfish, silverfishCovertedModel>
 {
+
     public SilverfishRenderer(EntityRendererFactory.Context context)
     {
         super(context, new silverfishCovertedModel(context.getPart(RenderInit.SILVERFISH_LAYER)), 0.5f);
@@ -19,6 +20,8 @@ public class SilverfishRenderer extends MobEntityRenderer<ZombieSilverfish, silv
 
     @Override public Identifier getTexture(ZombieSilverfish entity)
     {
+
         return new Identifier(ZombieMod.ModID, "textures/silverfish_01.png");
+
     }
 }

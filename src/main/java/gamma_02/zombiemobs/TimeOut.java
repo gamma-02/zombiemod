@@ -3,12 +3,10 @@ package gamma_02.zombiemobs;
 import gamma_02.zombiemobs.entities.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 public class TimeOut {

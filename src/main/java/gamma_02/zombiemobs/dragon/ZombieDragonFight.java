@@ -224,7 +224,7 @@ public class ZombieDragonFight
     }
 
     public void checkDragonSeen() {
-        List<? extends ZombieEnderDragon> list = this.world.getEntitiesByType(TypeFilter.instanceOf(ZombieEnderDragon.class), null);
+        List<? extends ZombieEnderDragon> list = this.world.getEntitiesByType(TypeFilter.instanceOf(ZombieEnderDragon.class), EntityPredicates.VALID_ENTITY);
         if (list.isEmpty()) {
             LOGGER.debug("Haven't seen the dragon, respawning it");
             this.createDragon();

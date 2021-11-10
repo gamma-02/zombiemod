@@ -2,6 +2,7 @@ package gamma_02.zombiemobs;
 
 import com.sun.jna.platform.win32.WinBase;
 import gamma_02.zombiemobs.entities.ZombieCreeperLeg;
+import gamma_02.zombiemobs.entities.ZombieDog;
 import gamma_02.zombiemobs.entities.ZombieMagmaCube;
 import gamma_02.zombiemobs.entities.ZombieSkeleton;
 import gamma_02.zombiemobs.models.*;
@@ -10,6 +11,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.client.model.Dilation;
 import net.minecraft.client.render.entity.PufferfishEntityRenderer;
 import net.minecraft.client.render.entity.model.BlazeEntityModel;
 import net.minecraft.client.render.entity.model.EndermanEntityModel;
@@ -37,6 +39,7 @@ public class RenderInit implements ClientModInitializer
     public static final EntityModelLayer SPIDER_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_spider_layer"), "main");
     public static final EntityModelLayer ENDERMAN_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_enderman_layer"),"main");
     public static final EntityModelLayer DRAGON_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_dragon_layer"), "main");
+    public static final EntityModelLayer DOG_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "zombie_dog"), "main");
     @Override public void onInitializeClient()
     {
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_WITCH, ZombieWitchRendere::new);
@@ -67,6 +70,9 @@ public class RenderInit implements ClientModInitializer
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_ENDERMAN, ZombieEndermanRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(DRAGON_LAYER, ZombieEnderdragonRenderer::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_ENDER_DRAGON, ZombieEnderdragonRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(DOG_LAYER, ZombieDogModel::getTexturedModelData);
+        EntityRendererRegistry.register(ZombieMod.ZOMBIE_DOG, ZombieDogRenderer::new);
+
 
 
     }

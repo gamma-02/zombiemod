@@ -42,7 +42,7 @@ public class ZombieMagmaCube extends SlimeEntity
 
 
 
-    protected void setSize(int size, boolean heal) {
+    public void setSize(int size, boolean heal) {
         super.setSize(size, heal);
         this.getAttributeInstance(EntityAttributes.GENERIC_ARMOR).setBaseValue((double)(size * 3));
     }

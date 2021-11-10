@@ -13,6 +13,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.system.CallbackI;
 
 public class ZombieMod implements ModInitializer
 {
@@ -56,6 +57,8 @@ public class ZombieMod implements ModInitializer
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieEnderman::new).dimensions(EntityType.ENDERMAN.getDimensions()).build());
     public static final EntityType<ZombieEnderDragon> ZOMBIE_ENDER_DRAGON = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_dragon"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieEnderDragon::new).dimensions(EntityType.ENDER_DRAGON.getDimensions()).build());
+    public static final EntityType<ZombieDog> ZOMBIE_DOG = Registry.register(Registry.ENTITY_TYPE, new Identifier(ModID, "zombie_dog"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, ZombieDog::new).dimensions(EntityType.WOLF.getDimensions()).build());
 
     public static void setServer(MinecraftServer server){
         ZombieMod.server = server;
@@ -82,6 +85,7 @@ public class ZombieMod implements ModInitializer
         FabricDefaultAttributeRegistry.register(ZOMBIE_BLAZE, ZombieBlaze.createZombieBlazeAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_ENDERMAN, ZombieEnderman.createEndermanAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_ENDER_DRAGON, ZombieEnderDragon.createEnderDragonAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_DOG, ZombieDog.createZombieWolfAttributes());
     }
     public static void setTimeout(TimeOut time){
         getTimeout = time;
