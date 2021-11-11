@@ -4,6 +4,7 @@ import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
@@ -20,14 +21,27 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import static net.minecraft.item.Items.TIPPED_ARROW;
 
-public class ZombieSkeleton extends SkeletonEntity
+public class ZombieSkeleton extends SkeletonEntity implements IAnimatable
 {
+    private double lastx= 0;
+    private double lastz = 0;
+    private AnimationFactory animationFactory = new AnimationFactory(this);
+    private AnimationBuilder builder = new AnimationBuilder();
 
     public ZombieSkeleton(EntityType<? extends ZombieSkeleton> entityType, World world)
     {
@@ -44,6 +58,7 @@ public class ZombieSkeleton extends SkeletonEntity
         double g = Math.sqrt(d * d + f * f);
         persistentProjectileEntity.setVelocity(d, e + g * 0.2D, f, 1.6F, (float)(14 - this.world.getDifficulty().getId() * 4));
         this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.ignoreCameraFrustum = true;
 
         this.world.spawnEntity(persistentProjectileEntity);
     }
@@ -59,5 +74,35 @@ public class ZombieSkeleton extends SkeletonEntity
 
         ZombieMod.getTimeout.add(this);
 
+    }
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)
+    {
+
+
+
+            this.builder.addAnimation("animation.zombie_skeleton.walk", true);
+
+        event.getController().setAnimation(builder);
+        return PlayState.CONTINUE;
+
+
+    }
+
+    @Override public void registerControllers(AnimationData animationData)
+    {
+        animationData.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+    }
+
+    @Override public AnimationFactory getFactory()
+    {
+        return this.animationFactory;
+    }
+
+    @Override public void tick()
+    {
+
+        super.tick();
+        this.lastx = this.getX();
+        this.lastz = this.getZ();
     }
 }

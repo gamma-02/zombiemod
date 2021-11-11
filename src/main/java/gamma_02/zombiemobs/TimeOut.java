@@ -8,11 +8,12 @@ import net.minecraft.world.World;
 
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TimeOut {
 
-    public HashMap<Long, Vec3d> pos = new HashMap<>();
-    public HashMap<Long, EntityType> entityType = new HashMap<>();
+    public ConcurrentHashMap<Long, Vec3d> pos = new ConcurrentHashMap<>();
+    public ConcurrentHashMap<Long, EntityType> entityType = new ConcurrentHashMap<>();
     public long ticks;
     private World world;
 
@@ -29,6 +30,9 @@ public class TimeOut {
 
         this.revive();
         this.ticks++;
+        if(pos.isEmpty() && entityType.isEmpty()){
+            this.ticks = 0;
+        }
     }
 
 

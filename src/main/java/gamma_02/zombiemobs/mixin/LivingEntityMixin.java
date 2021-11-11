@@ -172,8 +172,6 @@ public abstract class LivingEntityMixin extends Entity
 
             NbtCompound compound = dragon.getFight().toNbt();
             dragon.kill();
-            dragon.getFight().updateFight(dragon);
-            dragon.discard();
             compound.putBoolean("DragonKilled", false);
             compound.putBoolean("PreviouslyKilled", false);
             zombieDragonFight = new ZombieDragonFight(ZombieMod.getServer().getWorld(World.END), 1, compound);
@@ -184,15 +182,14 @@ public abstract class LivingEntityMixin extends Entity
 
 
         }else if(this.getType() == EntityType.WOLF){
-            WolfEntity wolf = (WolfEntity)world.getEntityById(this.getId());
-            if(wolf.isTamed()){
-                ZombieDog mob = new ZombieDog(ZOMBIE_DOG, world);
-                mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
-                System.out.println(mob);
-                world.spawnEntity(mob);
-            }
+
+            ZombieDog mob = new ZombieDog(ZOMBIE_DOG, world);
+            mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            System.out.println(mob);
+            world.spawnEntity(mob);
+
         }else if(this.getType() == EntityType.VILLAGER){
-            MobEntity mob = new ZombieVillagerEntity(EntityType.ZOMBIE_VILLAGER, world);
+            ZombieVillagerEntity mob = new ZombieVillagerEntity(EntityType.ZOMBIE_VILLAGER, world);
             mob.setPos(this.getX(), this.getY()+0.3, this.getZ());
             System.out.println(mob);
             world.spawnEntity(mob);

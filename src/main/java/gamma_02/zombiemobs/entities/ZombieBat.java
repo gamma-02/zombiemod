@@ -170,7 +170,7 @@ public class ZombieBat extends HostileEntity
                 this.lookAtEntity(this.world.getClosestPlayer(CLOSE_PLAYER_PREDICATE, this), 360f, 360f);
 
             }
-            Vec3d vec3d2 = getRotationVec3d(this.getPitch(), this.getYaw()).multiply(0.2,0.2,0.2);
+            Vec3d vec3d2 = getRotationVec3d(this.getPitch(), this.getYaw()).multiply(0.4,0.4,0.4);
 
             float f = (float)(MathHelper.atan2(vec3d2.z, vec3d2.x) * 57.2957763671875D) - 90.0F;
             float g = MathHelper.wrapDegrees(f - this.getYaw());
@@ -180,10 +180,6 @@ public class ZombieBat extends HostileEntity
                 this.setYaw(this.getYaw() + g);
             }
             this.setVelocity(vec3d2);
-
-
-
-
             this.forwardSpeed = 0.5F;
             if (this.random.nextInt(100) == 0 && this.world.getBlockState(blockPos2).isSolidBlock(this.world, blockPos2)) {
                 this.setRoosting(true);
@@ -219,8 +215,6 @@ public class ZombieBat extends HostileEntity
     public void onPlayerCollision(PlayerEntity player) {
 
         this.damage(player);
-
-
     }
     @Override
     public boolean canBeControlledByRider() {

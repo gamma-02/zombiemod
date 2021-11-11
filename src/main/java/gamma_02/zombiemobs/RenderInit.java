@@ -27,7 +27,6 @@ public class RenderInit implements ClientModInitializer
 {
     public static final EntityModelLayer WITCH_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "witch_layer"), "main");
     public static final EntityModelLayer BAT_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "bat_layer"), "main");
-    public static final EntityModelLayer SKELETON_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "skeleton_layer"), "main");
     public static final EntityModelLayer PIG_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "pig_layer"), "main");
     public static final EntityModelLayer SHEEP_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "sheep_layer"), "main");
     public static final EntityModelLayer SILVERFISH_LAYER = new EntityModelLayer(new Identifier(ZombieMod.ModID, "silverfish_layer"), "main");
@@ -47,7 +46,6 @@ public class RenderInit implements ClientModInitializer
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_BAT, ZombieBatRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(BAT_LAYER, batCovertedModel::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_SKELETON, SkeletonZombieRenderer::new);
-        EntityModelLayerRegistry.registerModelLayer(SKELETON_LAYER, skeletonCovertedModel::getTexturedModelData);
         EntityRendererRegistry.register(ZombieMod.ZOMBIE_PIG, ZombiePigRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(PIG_LAYER, pigCovertedModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SHEEP_LAYER, sheepCovertedModel::getTexturedModelData);
