@@ -19,7 +19,7 @@ public class ZombieDog extends WolfEntity
         this.setOwner(world.getClosestPlayer(this, 30));
     }
     public static DefaultAttributeContainer.Builder createZombieWolfAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D).add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.4D).add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0D).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0D);
     }
 
     @Override public void onDeath(DamageSource source)

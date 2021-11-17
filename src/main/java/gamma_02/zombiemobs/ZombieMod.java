@@ -79,7 +79,7 @@ public class ZombieMod implements ModInitializer
         FabricDefaultAttributeRegistry.register(ZOMBIE_SILVERFISH, ZombieSilverfish.createSilverfishAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_MAGMA_CUBE, ZombieMagmaCube.createMagmaCubeAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_GOLEM, ZombieGolem.createZombieGolemAttributes());
-        FabricDefaultAttributeRegistry.register(ZOMBIE_CREEPER, ZombieCreeper.createCreeperAttributes());
+        FabricDefaultAttributeRegistry.register(ZOMBIE_CREEPER, ZombieCreeper.createZombieBlazeAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_CREEPER_LEG, ZombieCreeperLeg.createCreeperLegAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_SPIDER, ZombieSpider.createSpiderAttributes());
         FabricDefaultAttributeRegistry.register(ZOMBIE_BLAZE, ZombieBlaze.createZombieBlazeAttributes());

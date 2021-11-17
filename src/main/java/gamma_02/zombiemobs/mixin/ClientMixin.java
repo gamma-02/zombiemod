@@ -2,6 +2,7 @@ package gamma_02.zombiemobs.mixin;
 
 import gamma_02.zombiemobs.entities.ZombieBat;
 import gamma_02.zombiemobs.entities.ZombieDragonPart;
+import gamma_02.zombiemobs.util;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
@@ -36,7 +37,7 @@ public class ClientMixin
     @Inject(method = "doAttack", at = @At("HEAD"))
     public void attackMixin(CallbackInfo ci){
         if (this.attackCooldown <=0 ){
-            Optional<Entity> target = DebugRenderer.getTargetedEntity(this.player, 5);
+            Optional<Entity> target = util.getTargetedEntity(this.player, 5);
             if(!target.isEmpty()){
                 if(target.get() instanceof ZombieDragonPart){
                     this.interactionManager.attackEntity(this.player, target.get());

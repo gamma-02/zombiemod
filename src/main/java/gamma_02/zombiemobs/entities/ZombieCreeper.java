@@ -3,6 +3,8 @@ package gamma_02.zombiemobs.entities;
 import gamma_02.zombiemobs.ZombieMod;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -54,6 +56,10 @@ public class ZombieCreeper extends CreeperEntity
             }
         }
         super.tick();
+    }
+
+    public static DefaultAttributeContainer.Builder createZombieBlazeAttributes(){
+        return CreeperEntity.createCreeperAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 6);
     }
 
 

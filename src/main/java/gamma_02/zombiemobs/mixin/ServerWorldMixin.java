@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin extends World implements Container
@@ -38,6 +39,11 @@ public abstract class ServerWorldMixin extends World implements Container
     @Shadow private boolean inBlockTick;
     @Shadow @Final private MinecraftServer server;
     @Shadow @Final private Int2ObjectMap<EnderDragonPart> dragonParts;
+
+    @Shadow protected abstract boolean addEntity(Entity entity);
+
+    @Shadow public abstract void addEntities(Stream<Entity> entities);
+
     private ZombieDragonFight zombieDragonFight;
     private TimeOut timeOut = ZombieMod.getTimeout;
 
@@ -58,6 +64,7 @@ public abstract class ServerWorldMixin extends World implements Container
 
         if (this.zombieDragonFight != null) {
             this.zombieDragonFight.tick();
+
         }
 
         if(ZombieMod.started && this.timeOut!=null){
@@ -76,20 +83,13 @@ public abstract class ServerWorldMixin extends World implements Container
     @Deprecated @Overwrite
     public @Nullable Entity getDragonPart(int id) {
         Entity entity = this.getEntityLookup().get(id);
+        this.addEntities(this.dragonPartsMap.values().stream());
         return entity != null ? entity : this.dragonPartsMap.get(id);
     }
 
 
 
-    @Nullable
-    public Entity getZombiePart(int id) {
-        Entity entity = this.getEntityLookup().get(id);
-        return entity != null ? entity : this.zombieDragonParts.get(id);
-    }
-    @Override
-    public Entity access(int id){
-        return this.getZombiePart(id);
-    }
+
 
 
 }

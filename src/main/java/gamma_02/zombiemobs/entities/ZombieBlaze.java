@@ -51,7 +51,7 @@ public class ZombieBlaze extends HostileEntity
     }
 
     public static DefaultAttributeContainer.Builder createZombieBlazeAttributes() {
-        return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.23000000417232513D).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48.0D);
+        return HostileEntity.createHostileAttributes().add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6.0D).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.23D).add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48.0D).add(EntityAttributes.GENERIC_MAX_HEALTH, 2D);
     }
 
     protected void initDataTracker() {

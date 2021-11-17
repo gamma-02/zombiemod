@@ -512,11 +512,11 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
     }
 
     public boolean damage(DamageSource source, float amount) {
-        if (source instanceof EntityDamageSource && ((EntityDamageSource)source).isThorns()) {
+        if (source instanceof EntityDamageSource) {
             this.damagePart(this.body, source, amount);
         }
 
-        return true;
+        return false;
     }
 
     protected boolean parentDamage(DamageSource source, float amount) {
@@ -774,6 +774,9 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
     }
 
     public void checkDespawn() {
+        if(hasPlayerRider()){
+            this.remove(RemovalReason.UNLOADED_TO_CHUNK);
+        }
     }
 
     public ZombieDragonPart[] getBodyParts() {
@@ -781,7 +784,7 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
     }
 
     public boolean collides() {
-        return false;
+        return true;
     }
 
     public SoundCategory getSoundCategory() {

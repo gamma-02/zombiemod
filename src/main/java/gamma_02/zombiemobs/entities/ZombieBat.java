@@ -94,13 +94,15 @@ public class ZombieBat extends HostileEntity
     }
 
     protected void pushAway(Entity entity) {
+
     }
 
     protected void tickCramming() {
+
     }
 
     public static DefaultAttributeContainer.Builder createBatAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 3.0D);
     }
 
     public boolean isRoosting() {

@@ -30,9 +30,7 @@ public class TimeOut {
 
         this.revive();
         this.ticks++;
-        if(pos.isEmpty() && entityType.isEmpty()){
-            this.ticks = 0;
-        }
+        
     }
 
 

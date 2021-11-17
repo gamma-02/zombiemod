@@ -71,7 +71,7 @@ public class EntityManagerMixin<T extends EntityLike>
 
             for(int var4 = 0; var4 < var3; ++var4) {
                 EnderDragonPart enderDragonPart = var2[var4];
-                ((Container)this).dragonPartsMap.put(enderDragonPart.getId(), enderDragonPart);
+                ((Container)ZombieMod.server.getWorld((entity).getEntityWorld().getRegistryKey())).dragonPartsMap.put(enderDragonPart.getId(), enderDragonPart);
             }
         }
     }
@@ -107,7 +107,7 @@ public class EntityManagerMixin<T extends EntityLike>
 
             for(int var4 = 0; var4 < var3; ++var4) {
                 EnderDragonPart enderDragonPart = var2[var4];
-                ((Container)this).dragonPartsMap.remove(enderDragonPart.getId(), enderDragonPart);
+                ((Container)ZombieMod.server.getWorld((entity).getEntityWorld().getRegistryKey())).dragonPartsMap.remove(enderDragonPart.getId(), enderDragonPart);
             }
         }
     }
