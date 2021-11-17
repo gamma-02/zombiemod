@@ -7,6 +7,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -20,7 +21,7 @@ public class ZombieCreeper extends CreeperEntity
 {
     private int lastFuseTime;
     private int currentFuseTime;
-    private int fuseTime;
+    private int fuseTime = 30;
 
 
     public ZombieCreeper(EntityType<? extends ZombieCreeper> entityType, World world)
@@ -72,8 +73,14 @@ public class ZombieCreeper extends CreeperEntity
             mob2.setPos(this.getX()+0.1, this.getY()+0.1, this.getZ()-0.1);
             mob3.setPos(this.getX()-0.1, this.getY()+0.1, this.getZ()+0.1);
             mob4.setPos(this.getX()-0.1, this.getY()+0.1, this.getZ()-0.1);
+            ZombieMod.getServer().getWorld(this.world.getRegistryKey()).spawnEntity(mob1);
+            ZombieMod.getServer().getWorld(this.world.getRegistryKey()).spawnEntity(mob2);
+            ZombieMod.getServer().getWorld(this.world.getRegistryKey()).spawnEntity(mob3);
+            ZombieMod.getServer().getWorld(this.world.getRegistryKey()).spawnEntity(mob4);
 
         }
+
+
 
     }
     private void spawnEffectsCloud() {
@@ -93,6 +100,24 @@ public class ZombieCreeper extends CreeperEntity
             }
 
             this.world.spawnEntity(areaEffectCloudEntity);
+        }
+
+    }
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putShort("Fuse", (short)this.fuseTime);
+        nbt.putBoolean("ignited", this.isIgnited());
+    }
+
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        if (nbt.contains("Fuse", 99)) {
+            this.fuseTime = nbt.getShort("Fuse");
+        }
+
+
+        if (nbt.getBoolean("ignited")) {
+            this.ignite();
         }
 
     }

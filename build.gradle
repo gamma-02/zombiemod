@@ -15,6 +15,9 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
 }
+loom {
+    accessWidenerPath = file("src/main/resources/zombiemod.aw")
+}
 
 dependencies {
     // To change the versions see the gradle.properties file

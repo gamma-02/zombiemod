@@ -51,6 +51,8 @@ import net.minecraft.world.WorldEvents;
 import net.minecraft.world.gen.feature.EndPortalFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -270,7 +272,7 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
                         if (this.slowedDownByBlock) {
                             this.move(MovementType.SELF, this.getVelocity().multiply(0.800000011920929D));
                         } else {
-                            this.move(MovementType.SELF, this.getVelocity());
+                            this.move(MovementType.SELF, this.getVelocity().multiply(2));
                         }
 
                         Vec3d vec3d4 = this.getVelocity().normalize();
@@ -514,7 +516,7 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
             this.damagePart(this.body, source, amount);
         }
 
-        return false;
+        return true;
     }
 
     protected boolean parentDamage(DamageSource source, float amount) {
@@ -740,7 +742,7 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
         }
     }
 
-    private Path getPathOfAllPredecessors(PathNode unused, PathNode node) {
+    @Contract("_, _ -> new") private @NotNull Path getPathOfAllPredecessors(PathNode unused, PathNode node) {
         List<PathNode> list = Lists.newArrayList();
         PathNode pathNode = node;
         list.add(0, node);
@@ -907,7 +909,7 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
     }
 
     static {
-        PHASE_TYPE = DataTracker.registerData(EnderDragonEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        PHASE_TYPE = DataTracker.registerData(ZombieEnderDragon.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createAttackable().setBaseMaxDistance(64.0D);
     }
 

@@ -12,9 +12,9 @@ import net.minecraft.block.pattern.BlockPatternBuilder;
 import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonSpawnState;
 import net.minecraft.entity.boss.dragon.phase.PhaseType;
 import net.minecraft.entity.damage.DamageSource;
@@ -202,11 +202,11 @@ public class ZombieDragonFight
             }
         }
 
-        List<? extends EnderDragonEntity> list = this.world.getAliveEnderDragons();
+        List<? extends ZombieEnderDragon> list = this.getAliveZombieDragons();
         if (list.isEmpty()) {
             this.dragonKilled = true;
         } else {
-            EnderDragonEntity enderDragonEntity = (EnderDragonEntity)list.get(0);
+            ZombieEnderDragon enderDragonEntity = list.get(0);
             this.dragonUuid = enderDragonEntity.getUuid();
             LOGGER.info((String)"Found that there's a dragon still alive ({})", (Object)enderDragonEntity);
             this.dragonKilled = false;
@@ -448,8 +448,8 @@ public class ZombieDragonFight
         } else {
             this.countAliveCrystals();
             Entity entity = this.world.getEntity(this.dragonUuid);
-            if (entity instanceof EnderDragonEntity) {
-                ((EnderDragonEntity)entity).crystalDestroyed(enderCrystal, enderCrystal.getBlockPos(), source);
+            if (entity instanceof ZombieEnderDragon) {
+                ((ZombieEnderDragon)entity).crystalDestroyed(enderCrystal, enderCrystal.getBlockPos(), source);
             }
         }
 
@@ -533,6 +533,9 @@ public class ZombieDragonFight
             }
         }
 
+    }
+    public List<? extends ZombieEnderDragon> getAliveZombieDragons() {
+        return this.world.getEntitiesByType(ZombieMod.ZOMBIE_ENDER_DRAGON, LivingEntity::isAlive);
     }
 
     static {

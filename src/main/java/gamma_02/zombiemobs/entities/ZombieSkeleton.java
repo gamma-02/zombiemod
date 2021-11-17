@@ -75,22 +75,18 @@ public class ZombieSkeleton extends SkeletonEntity implements IAnimatable
         ZombieMod.getTimeout.add(this);
 
     }
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)
-    {
-
-
-
-            this.builder.addAnimation("animation.zombie_skeleton.walk", true);
-
-        event.getController().setAnimation(builder);
+    private <E extends IAnimatable> PlayState basicMovement(AnimationEvent<E> event) {
+        if (event.getLimbSwingAmount()>0.1F){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.zombie_skeleton.walk", true));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.zombie_skeleton.idle", true));
+        }
         return PlayState.CONTINUE;
-
-
     }
 
     @Override public void registerControllers(AnimationData animationData)
     {
-        animationData.addAnimationController(new AnimationController(this, "controller", 0, this::predicate));
+        animationData.addAnimationController(new AnimationController(this, "controller", 0, this::basicMovement));
     }
 
     @Override public AnimationFactory getFactory()

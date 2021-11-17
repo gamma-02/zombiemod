@@ -17,7 +17,6 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Matrix3f;
@@ -212,7 +211,7 @@ public class ZombieEnderdragonRenderer extends EntityRenderer<ZombieEnderDragon>
     }
 
     @Environment(EnvType.CLIENT)
-    public static class DragonEntityModel extends EntityModel<EnderDragonEntity>
+    public static class DragonEntityModel extends EntityModel<ZombieEnderDragon>
     {
         private final ModelPart head;
         private final ModelPart neck;
@@ -266,7 +265,7 @@ public class ZombieEnderdragonRenderer extends EntityRenderer<ZombieEnderDragon>
             this.tickDelta = h;
         }
 
-        public void setAngles(EnderDragonEntity enderDragonEntity, float f, float g, float h, float i, float j) {
+        public void setAngles(ZombieEnderDragon enderDragonEntity, float f, float g, float h, float i, float j) {
         }
 
         public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {

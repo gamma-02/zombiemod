@@ -20,6 +20,7 @@
       "gamma_02.zombiemobs.RenderInit"
     ]
   },
+  "accessWidener": "zombiemod.aw",
   "mixins": [
     "zombiemobs.mixins.json"
   ],

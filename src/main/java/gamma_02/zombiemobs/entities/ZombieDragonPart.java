@@ -1,9 +1,7 @@
 package gamma_02.zombiemobs.entities;
 
 import gamma_02.zombiemobs.ZombieMod;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.nbt.NbtCompound;
@@ -19,6 +17,7 @@ public class ZombieDragonPart extends Entity
 
         public ZombieDragonPart(ZombieEnderDragon enderDragonEntity, String string, float f, float g) {
             super(enderDragonEntity.getType(), enderDragonEntity.world);
+            System.out.println("w h y");
             this.partDimensions = EntityDimensions.changing(f, g);
             this.calculateDimensions();
             this.owner = enderDragonEntity;
@@ -28,10 +27,10 @@ public class ZombieDragonPart extends Entity
         protected void initDataTracker() {
         }
 
-        protected void readCustomDataFromNbt(NbtCompound nbt) {
+        public void readCustomDataFromNbt(NbtCompound nbt) {
         }
 
-        protected void writeCustomDataToNbt(NbtCompound nbt) {
+        public void writeCustomDataToNbt(NbtCompound nbt) {
         }
 
         public boolean collides() {
@@ -49,6 +48,8 @@ public class ZombieDragonPart extends Entity
         public Packet<?> createSpawnPacket() {
             throw new UnsupportedOperationException();
         }
+
+
 
         public EntityDimensions getDimensions(EntityPose pose) {
             return this.partDimensions;

@@ -3,15 +3,24 @@ package gamma_02.zombiemobs.mixin;
 import gamma_02.zombiemobs.TimeOut;
 import gamma_02.zombiemobs.ZombieMod;
 import gamma_02.zombiemobs.dragon.ZombieDragonFight;
+import gamma_02.zombiemobs.entities.ZombieDragonPart;
+import gamma_02.zombiemobs.models.Container;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.world.ServerEntityManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.MutableWorldProperties;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,11 +30,14 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 @Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin extends World
+public abstract class ServerWorldMixin extends World implements Container
 {
 
+    Int2ObjectMap<ZombieDragonPart> zombieDragonParts;
+    Int2ObjectMap<Entity> dragonPartsMap = new Int2ObjectOpenHashMap<>();
     @Shadow private boolean inBlockTick;
     @Shadow @Final private MinecraftServer server;
+    @Shadow @Final private Int2ObjectMap<EnderDragonPart> dragonParts;
     private ZombieDragonFight zombieDragonFight;
     private TimeOut timeOut = ZombieMod.getTimeout;
 
@@ -33,6 +45,7 @@ public abstract class ServerWorldMixin extends World
             DimensionType dimensionType, Supplier<Profiler> supplier, boolean bl, boolean bl2, long l)
     {
         super(mutableWorldProperties, registryKey, dimensionType, supplier, bl, bl2, l);
+        this.zombieDragonParts = new Int2ObjectOpenHashMap();
 
     }
 
@@ -56,8 +69,33 @@ public abstract class ServerWorldMixin extends World
 
 
     }
+    /**
+     * @author gamma_02
+     * @reason lul
+     */
+    @Deprecated @Overwrite
+    public @Nullable Entity getDragonPart(int id) {
+        Entity entity = this.getEntityLookup().get(id);
+        return entity != null ? entity : this.dragonPartsMap.get(id);
+    }
+
+
+
+    @Nullable
+    public Entity getZombiePart(int id) {
+        Entity entity = this.getEntityLookup().get(id);
+        return entity != null ? entity : this.zombieDragonParts.get(id);
+    }
+    @Override
+    public Entity access(int id){
+        return this.getZombiePart(id);
+    }
+
 
 }
+
+
+
 
 
 

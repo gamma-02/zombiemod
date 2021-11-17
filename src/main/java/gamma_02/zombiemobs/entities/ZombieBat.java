@@ -40,6 +40,7 @@ public class ZombieBat extends HostileEntity
     private static final int ROOSTING_FLAG = 1;
     private static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TargetPredicate CLOSE_PLAYER_PREDICATE2;
+    private int attackTicks;
     private BlockPos hangingPosition;
     public static final float field_30268 = 74.48451F;
     public static final int field_28637 = MathHelper.ceil(2.4166098F);
@@ -118,6 +119,9 @@ public class ZombieBat extends HostileEntity
 
     public void tick() {
         super.tick();
+        if(this.attackTicks > 0){
+            this.attackTicks--;
+        }
         if (this.isRoosting()) {
             this.setVelocity(Vec3d.ZERO);
             this.setPos(this.getX(), (double)MathHelper.floor(this.getY()) + 1.0D - (double)this.getHeight(), this.getZ());
@@ -166,15 +170,16 @@ public class ZombieBat extends HostileEntity
 
 
             Vec3d vec3d = this.getVelocity();
-            if(this.world.getClosestPlayer(CLOSE_PLAYER_PREDICATE, this) != null){
+            Vec3d vec3d2 = getRotationVec3d(this.getPitch(), this.getYaw()).multiply(0.4,0.4,0.4);;
+            if(this.world.getClosestPlayer(CLOSE_PLAYER_PREDICATE, this) != null && this.attackTicks <= 0){
                 this.lookAtEntity(this.world.getClosestPlayer(CLOSE_PLAYER_PREDICATE, this), 360f, 360f);
-
+                vec3d2 = getRotationVec3d(this.getPitch(), this.getYaw()).multiply(0.4,0.4,0.4);
             }
-            Vec3d vec3d2 = getRotationVec3d(this.getPitch(), this.getYaw()).multiply(0.4,0.4,0.4);
+
 
             float f = (float)(MathHelper.atan2(vec3d2.z, vec3d2.x) * 57.2957763671875D) - 90.0F;
             float g = MathHelper.wrapDegrees(f - this.getYaw());
-            if(this.world.getClosestPlayer(CLOSE_PLAYER_PREDICATE2, this) == null)
+            if(this.world.getClosestPlayer(CLOSE_PLAYER_PREDICATE2, this) == null || this.attackTicks > 0 )
             {
                 vec3d2 = vec3d.add((Math.signum(bl) * 0.5D - vec3d.x) * 0.10000000149011612D, (Math.signum(d) * 0.699999988079071D - vec3d.y) * 0.10000000149011612D, (Math.signum(e) * 0.5D - vec3d.z) * 0.10000000149011612D);
                 this.setYaw(this.getYaw() + g);
@@ -196,19 +201,23 @@ public class ZombieBat extends HostileEntity
         return false;
     }
 
-    protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
+    public void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
     }
 
     public boolean canAvoidTraps() {
         return true;
     }
     protected void damage(LivingEntity target) {
+
         if (this.isAlive()) {
 
             if (this.squaredDistanceTo(target) < 0.6D * (double)1 * 0.6D * (double)1 && this.canSee(target) && target.damage(DamageSource.mob(this), 3)) {
                 this.playSound(SoundEvents.ENTITY_BAT_DEATH, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 this.applyDamageEffects(this, target);
             }
+        }
+        if(target instanceof PlayerEntity){
+            this.attackTicks = 20;
         }
 
     }
@@ -236,11 +245,13 @@ public class ZombieBat extends HostileEntity
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(BAT_FLAGS, nbt.getByte("BatFlags"));
+        this.attackTicks = nbt.getInt("AttackTimer");
     }
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putByte("BatFlags", this.dataTracker.get(BAT_FLAGS));
+        nbt.putInt("AttackTimer", this.attackTicks);
     }
 
 
