@@ -97,6 +97,7 @@ public abstract class EntityMixin
                             //            world.spawnEntity(mob1);
                             System.out.println(mob);
                             //            mob.startRiding(mob1, true);
+                            entity.kill();
 
                         } else if (entity.getType() == EntityType.BAT)
                         {
@@ -104,24 +105,28 @@ public abstract class EntityMixin
                             mob.setPos(entity.getX(), entity.getY(), entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.SKELETON)
                         {
                             MobEntity mob = new ZombieSkeleton(ZOMBIE_SKELETON, world);
                             mob.setPos(entity.getX(), entity.getY(), entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.PIG)
                         {
                             MobEntity mob = new ZombiePig(ZOMBIE_PIG, world);
                             mob.setPos(entity.getX(), entity.getY() + 0.3, entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.SHEEP)
                         {
                             MobEntity mob = new ZombieSheep(ZOMBIE_SHEEP, world);
                             mob.setPos(entity.getX(), entity.getY() + 0.3, entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.SILVERFISH)
                         {
                             MobEntity mob = new ZombieSilverfish(ZOMBIE_SILVERFISH, world);
@@ -133,43 +138,51 @@ public abstract class EntityMixin
                             System.out.println(mob2);
                             world.spawnEntity(mob);
                             world.spawnEntity(mob2);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.MAGMA_CUBE)
                         {
                             MobEntity mob = new ZombieMagmaCube(ZOMBIE_MAGMA_CUBE, world);
                             mob.setPos(entity.getX(), entity.getY() + 0.3, entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.IRON_GOLEM)
                         {
                             MobEntity mob = new ZombieGolem(ZOMBIE_GOLEM, world);
                             mob.setPos(entity.getX(), entity.getY() + 0.3, entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.CREEPER)
                         {
                             MobEntity mob = new ZombieCreeper(ZOMBIE_CREEPER, world);
                             mob.setPos(entity.getX(), entity.getY() + 0.3, entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.SPIDER)
                         {
                             MobEntity mob = new ZombieSpider(ZOMBIE_SPIDER, world);
                             mob.setPos(entity.getX(), entity.getY() + 0.3, entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
-
+                            entity.kill();
                         } else if (entity.getType() == EntityType.BLAZE)
                         {
                             MobEntity mob = new ZombieBlaze(ZOMBIE_BLAZE, world);
                             mob.setPos(entity.getX(), entity.getY() + 0.3, entity.getZ());
                             System.out.println(mob);
                             world.spawnEntity(mob);
+                            entity.kill();
                         } else if (entity.getType() == EntityType.ENDERMAN)
                         {
+
                             MobEntity mob = new ZombieEnderman(ZOMBIE_ENDERMAN, world);
                             mob.setPos(entity.getX(), entity.getY() + 0.3, entity.getZ());
+                            entity.discard();
                             System.out.println(mob);
                             world.spawnEntity(mob);
+
                         }
                     }
                 }
