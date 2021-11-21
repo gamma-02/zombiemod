@@ -80,7 +80,7 @@ public class ZombieDragonFight
 
     public ZombieDragonFight(ServerWorld serverWorld, long l, NbtCompound nbtCompound, ZombieEnderDragon dragon) {
         dragon.setDragonFight(this);
-        this.bossBar = (ServerBossBar)(new ServerBossBar(new TranslatableText("entity.minecraft.ender_dragon"), BossBar.Color.PINK, BossBar.Style.PROGRESS)).setDragonMusic(true).setThickenFog(true);
+        this.bossBar = (ServerBossBar)(new ServerBossBar(new TranslatableText("Zombie Dragon"), BossBar.Color.PINK, BossBar.Style.PROGRESS)).setDragonMusic(true).setThickenFog(true);
         this.gateways = Lists.newArrayList();
         this.doLegacyCheck = true;
         this.world = serverWorld;
@@ -209,11 +209,7 @@ public class ZombieDragonFight
             this.dragonUuid = enderDragonEntity.getUuid();
             LOGGER.info((String)"Found that there's a dragon still alive ({})", (Object)enderDragonEntity);
             this.dragonKilled = false;
-            if (!bl) {
-                LOGGER.info("But we didn't have a portal, let's remove it.");
-                enderDragonEntity.discard();
-                this.dragonUuid = null;
-            }
+
         }
 
         if (!this.previouslyKilled && this.dragonKilled) {
@@ -425,12 +421,10 @@ public class ZombieDragonFight
     public void updateFight(ZombieEnderDragon dragon) {
         System.out.println(this.dragonUuid);
         System.out.println(dragon.getUuid());
-        if (dragon.getUuid().equals(this.dragonUuid)) {
-            this.bossBar.setPercent(dragon.getHealth() / dragon.getMaxHealth());
-            this.dragonSeenTimer = 0;
-            if (dragon.hasCustomName()) {
-                this.bossBar.setName(dragon.getDisplayName());
-            }
+        this.bossBar.setPercent((dragon.getHealth() / dragon.getMaxHealth()));
+        this.dragonSeenTimer = 0;
+        if (dragon.hasCustomName()) {
+            this.bossBar.setName(dragon.getDisplayName());
         }
 
     }

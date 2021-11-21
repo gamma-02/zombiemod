@@ -117,7 +117,7 @@ public abstract class LivingEntityMixin extends Entity
             world.spawnEntity(mob);
         }else if(this.getType() == EntityType.SKELETON){
             MobEntity mob = new ZombieSkeleton(ZOMBIE_SKELETON, world);
-            mob.setPos(this.getX(), this.getY(), this.getZ());
+            mob.setPos(this.getX(), this.getY()+1, this.getZ());
             System.out.println(mob);
             world.spawnEntity(mob);
         }else if(this.getType() == EntityType.PIG){
@@ -178,20 +178,20 @@ public abstract class LivingEntityMixin extends Entity
             world.spawnEntity(mob);
         }else if(this.getType() == EntityType.ENDER_DRAGON){
             EnderDragonEntity dragon = this.getDragonEntity();
-            dragon.deathTime = 0;
 
-
-
-            NbtCompound compound = dragon.getFight().toNbt();
-            dragon.kill();
+            NbtCompound compound = new NbtCompound();
+            EnderDragonFight fight = dragon.getFight();
+            fight.dragonKilled(dragon);
+            compound.put("ExitPortalLocation", fight.toNbt().get("ExitPortalLocation"));
+            ZombieEnderDragon zombieDragon = new ZombieEnderDragon(ZOMBIE_ENDER_DRAGON, this.world);
             compound.putBoolean("DragonKilled", false);
             compound.putBoolean("PreviouslyKilled", false);
-            ZombieEnderDragon zombieDragon = new ZombieEnderDragon(ZOMBIE_ENDER_DRAGON, this.world);
-            world.spawnEntity(zombieDragon);
             zombieDragonFight = new ZombieDragonFight(ZombieMod.getServer().getWorld(World.END), 1, compound, zombieDragon);
+            zombieDragon.setDragonFight(zombieDragonFight);
             ZombieMod.setZombieDragonFight(zombieDragonFight);
-            System.out.println(zombieDragonFight.toNbt().getUuid("Dragon"));
+
             zombieDragon.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            dragon.remove(RemovalReason.DISCARDED);
 
 
 

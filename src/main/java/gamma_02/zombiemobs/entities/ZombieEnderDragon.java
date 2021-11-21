@@ -116,7 +116,7 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
         this.noClip = true;
         this.ignoreCameraFrustum = true;
         if (world instanceof ServerWorld) {
-            this.fight = new ZombieDragonFight((ServerWorld) world, 1, ((ServerWorld)world).getEnderDragonFight().toNbt(), this);
+            this.fight = ZombieMod.getZombieDragonFight();
         } else {
             this.fight = null;
         }

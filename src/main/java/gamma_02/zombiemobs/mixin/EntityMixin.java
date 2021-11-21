@@ -7,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
@@ -16,6 +15,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -50,6 +50,10 @@ public abstract class EntityMixin
 
     @Shadow public abstract Box getBoundingBox();
 
+    @Shadow public abstract Vec3d getPos();
+
+    @Shadow public abstract double getY();
+
     @Inject(method = "tick", at = @At("HEAD"))
     public void tickMixin(CallbackInfo ci)
     {
@@ -57,26 +61,27 @@ public abstract class EntityMixin
         {
             ServerWorld world = ZombieMod.getServer().getWorld(World.END);
             AreaEffectCloudEntity areaEffectCloud = (AreaEffectCloudEntity)ZombieMod.getServer().getWorld(World.END).getEntity(this.getUuid());
+
             if(areaEffectCloud != null)
             {
+
                 if (areaEffectCloud.getOwner() != null ? areaEffectCloud.getOwner() instanceof ZombieEnderDragon : this.getEntityWorld() != null)
                 {
-                    float radius = areaEffectCloud.getRadius();
 
-                    Box box = new Box(areaEffectCloud.getBlockPos().add((double) radius, 1, (double) radius),
-                            areaEffectCloud.getBlockPos().add((double) (radius * -1), -1, (double) (radius * -1)));
+                    Box box = areaEffectCloud.getBoundingBox();
 
-                    for (double boxx = 0; boxx < box.maxX; boxx++)
+                    for (double boxx = box.minX; boxx < box.maxX; boxx++)
                     {
-                        for (double boxy = 0; boxy < box.maxY; boxy++)
+                        for (double boxy = box.minY; boxy < box.maxY; boxy++)
                         {
-                            for (double boxz = 0; boxz < box.maxZ; boxz++)
+                            for (double boxz = box.minZ; boxz < box.maxZ; boxz++)
                             {
                                 BlockPos fillPos = new BlockPos(boxx, boxy, boxz);
                                 world.breakBlock(fillPos, true);
                             }
                         }
                     }
+
                     Entity entity;
                     List<Entity> entities = this.getEntityWorld().getOtherEntities(null, box);
                     for (Entity value : entities)
@@ -167,10 +172,11 @@ public abstract class EntityMixin
                             world.spawnEntity(mob);
                         }
                     }
-
                 }
             }
         }
+    }
+}
 //        Entity a = ZombieMod.getServer().getWorld(this.getEntityWorld().getRegistryKey()).getEntityById(this.id);
 //        if(a instanceof ArrowEntity)
 //        {
@@ -191,7 +197,4 @@ public abstract class EntityMixin
 
 
 
-    }
-
-}
 
