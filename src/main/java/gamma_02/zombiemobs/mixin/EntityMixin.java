@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
@@ -46,6 +47,8 @@ public abstract class EntityMixin
     @Shadow private Box entityBounds;
 
     @Shadow public abstract ActionResult interact(PlayerEntity player, Hand hand);
+
+    @Shadow public abstract Box getBoundingBox();
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void tickMixin(CallbackInfo ci)
@@ -168,24 +171,23 @@ public abstract class EntityMixin
                 }
             }
         }
-        var a = ZombieMod.getServer().getWorld(this.getEntityWorld().getRegistryKey()).getEntityById(this.id);
-        if(a instanceof ArrowEntity)
-        {
-            for (Entity en : this.getEntityWorld().getOtherEntities(null, new Box(this.blockPos, this.blockPos), (entity) -> entity instanceof LivingEntity && entity.isPushable()))
-            {
-
-                if (this.getEntityWorld().getEntityById(this.id) instanceof ArrowEntity && (en instanceof ZombieEnderDragon || en instanceof EnderDragonEntity))
-                {
-                    this.remove(Entity.RemovalReason.DISCARDED);
-
-                    if (a != null)
-                    {
-                        ((ArrowEntity) a).onHit((LivingEntity) en);
-                    }
-
-                }
-            }
-        }
+//        Entity a = ZombieMod.getServer().getWorld(this.getEntityWorld().getRegistryKey()).getEntityById(this.id);
+//        if(a instanceof ArrowEntity)
+//        {
+//            for (Entity en : this.getEntityWorld().getOtherEntities(null, this.getBoundingBox(), (entity) -> entity instanceof ZombieDragonPart || entity instanceof EnderDragonPart))
+//            {
+//
+//                if (this.getEntityWorld().getEntityById(this.id) instanceof ArrowEntity && en instanceof ZombieDragonPart ent)
+//                {
+//                    ((ArrowEntity) a).onHit(ent.owner);
+//                    this.remove(Entity.RemovalReason.DISCARDED);
+//
+//                }else if(this.getEntityWorld().getEntityById(this.id) instanceof ArrowEntity && en instanceof EnderDragonPart ent){
+//                    ((ArrowEntity) a).onHit(ent.owner);
+//                    this.remove(Entity.RemovalReason.DISCARDED);
+//                }
+//            }
+//        }
 
 
 

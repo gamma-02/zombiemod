@@ -31,7 +31,7 @@ import static gamma_02.zombiemobs.ZombieMod.ModID;
 public class ZombieEnderdragonRenderer extends EntityRenderer<ZombieEnderDragon>
 {
     public static final Identifier CRYSTAL_BEAM_TEXTURE = new Identifier("textures/entity/end_crystal/end_crystal_beam.png");
-    private static final Identifier EXPLOSION_TEXTURE = new Identifier("textures/entity/enderdragon/dragon_exploding.png");
+    private static final Identifier EXPLOSION_TEXTURE = new Identifier(ModID, "textures/allt-exploding.png");
     private static final Identifier TEXTURE = new Identifier(ModID, "textures/enderdragon_04.png");
     private static final Identifier EYE_TEXTURE = new Identifier(ModID,"textures/enderdragon_eyes.png");
     private static final RenderLayer DRAGON_CUTOUT;

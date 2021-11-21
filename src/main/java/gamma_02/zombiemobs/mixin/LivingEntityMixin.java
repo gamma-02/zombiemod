@@ -186,11 +186,13 @@ public abstract class LivingEntityMixin extends Entity
             dragon.kill();
             compound.putBoolean("DragonKilled", false);
             compound.putBoolean("PreviouslyKilled", false);
-            zombieDragonFight = new ZombieDragonFight(ZombieMod.getServer().getWorld(World.END), 1, compound);
-            ZombieMod.setZombieDragonFight(zombieDragonFight);
-            ZombieEnderDragon zombieDragon = zombieDragonFight.createDragon();
-            zombieDragon.setPos(this.getX(), this.getY()+0.3, this.getZ());
+            ZombieEnderDragon zombieDragon = new ZombieEnderDragon(ZOMBIE_ENDER_DRAGON, this.world);
             world.spawnEntity(zombieDragon);
+            zombieDragonFight = new ZombieDragonFight(ZombieMod.getServer().getWorld(World.END), 1, compound, zombieDragon);
+            ZombieMod.setZombieDragonFight(zombieDragonFight);
+            System.out.println(zombieDragonFight.toNbt().getUuid("Dragon"));
+            zombieDragon.setPos(this.getX(), this.getY()+0.3, this.getZ());
+
 
 
         }else if(this.getType() == EntityType.WOLF){

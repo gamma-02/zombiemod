@@ -94,7 +94,7 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
     @Nullable
     public EndCrystalEntity connectedCrystal;
     @Nullable
-    private final ZombieDragonFight fight;
+    private ZombieDragonFight fight;
     private final ZombieDragonPhaseManager phaseManager;
     private int ticksUntilNextGrowl = 100;
     private int damageDuringSitting;
@@ -116,7 +116,7 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
         this.noClip = true;
         this.ignoreCameraFrustum = true;
         if (world instanceof ServerWorld) {
-            this.fight = new ZombieDragonFight((ServerWorld) world, 1, ((ServerWorld)world).getEnderDragonFight().toNbt());
+            this.fight = new ZombieDragonFight((ServerWorld) world, 1, ((ServerWorld)world).getEnderDragonFight().toNbt(), this);
         } else {
             this.fight = null;
         }
@@ -128,6 +128,10 @@ public class ZombieEnderDragon extends HostileEntity implements Monster
 
     public static DefaultAttributeContainer.Builder createEnderDragonAttributes() {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 200.0D);
+    }
+
+    public void setDragonFight(ZombieDragonFight newFight){
+        this.fight = newFight;
     }
 
     public boolean hasWings() {

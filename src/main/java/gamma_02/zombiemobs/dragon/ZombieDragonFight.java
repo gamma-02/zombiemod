@@ -78,7 +78,8 @@ public class ZombieDragonFight
     private int spawnStateTimer;
     private List<EndCrystalEntity> crystals;
 
-    public ZombieDragonFight(ServerWorld serverWorld, long l, NbtCompound nbtCompound) {
+    public ZombieDragonFight(ServerWorld serverWorld, long l, NbtCompound nbtCompound, ZombieEnderDragon dragon) {
+        dragon.setDragonFight(this);
         this.bossBar = (ServerBossBar)(new ServerBossBar(new TranslatableText("entity.minecraft.ender_dragon"), BossBar.Color.PINK, BossBar.Style.PROGRESS)).setDragonMusic(true).setThickenFog(true);
         this.gateways = Lists.newArrayList();
         this.doLegacyCheck = true;
@@ -88,10 +89,8 @@ public class ZombieDragonFight
         }
 
         if (nbtCompound.contains("DragonKilled", 99)) {
-            if (nbtCompound.containsUuid("Dragon")) {
-                this.dragonUuid = nbtCompound.getUuid("Dragon");
-            }
-
+            this.dragonUuid = dragon.getUuid();
+            nbtCompound.putUuid("Dragon", this.dragonUuid);
             this.dragonKilled = nbtCompound.getBoolean("DragonKilled");
             this.previouslyKilled = nbtCompound.getBoolean("PreviouslyKilled");
             if (nbtCompound.getBoolean("IsRespawning")) {
@@ -424,6 +423,8 @@ public class ZombieDragonFight
     }
 
     public void updateFight(ZombieEnderDragon dragon) {
+        System.out.println(this.dragonUuid);
+        System.out.println(dragon.getUuid());
         if (dragon.getUuid().equals(this.dragonUuid)) {
             this.bossBar.setPercent(dragon.getHealth() / dragon.getMaxHealth());
             this.dragonSeenTimer = 0;

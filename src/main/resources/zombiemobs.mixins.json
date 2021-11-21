@@ -4,6 +4,7 @@
   "package": "gamma_02.zombiemobs.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "DragonFightMizin",
     "EntityManagerMixin",
     "EntityMixin",
     "LivingEntityMixin",
@@ -13,8 +14,8 @@
     "ServerWorldMixin"
   ],
   "client": [
-    "EntityRenderDispatcherMixin",
-    "ClientMixin"
+    "ClientMixin",
+    "EntityRenderDispatcherMixin"
   ],
   "injectors": {
     "defaultRequire": 1
